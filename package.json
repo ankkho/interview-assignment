@@ -1,0 +1,53 @@
+{
+  "name": "assignment",
+  "version": "1.0.0",
+  "description": "Interview assignment",
+  "main": "index.ts",
+  "repository": "git@github.com:ankkho/interview-assignment.git",
+  "author": "Ankit Khosla",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "prettier": "prettier --config .prettierrc './**/*.ts' --write",
+    "prepare": "husky install",
+    "lint:fix": "tslint --fix ./**/*.ts",
+    "build": "tsc -p .",
+    "start": "ts-node --pretty ./src/server.ts",
+    "dev": "nodemon",
+    "seed": "yarn build && node build/scripts/seed.js",
+    "test": "jest --coverage --verbose --silent --runInBand"
+  },
+  "dependencies": {
+    "@types/express-pino-logger": "^4.0.3",
+    "@types/ramda": "^0.28.2",
+    "apollo-server-express": "^3.6.5",
+    "axios": "^0.26.1",
+    "dotenv": "^16.0.0",
+    "express": "^4.17.3",
+    "express-graphql": "^0.12.0",
+    "express-pino-logger": "^7.0.0",
+    "graphql": "^15.8.0",
+    "pg": "^8.7.3",
+    "pg-hstore": "^2.3.4",
+    "pg-native": "^3.0.0",
+    "pino": "^7.9.1",
+    "ramda": "^0.28.0",
+    "sequelize": "^6.17.0"
+  },
+  "devDependencies": {
+    "@types/jest": "^27.4.1",
+    "@types/node": "^17.0.21",
+    "@types/validator": "^13.7.1",
+    "eslint-config-prettier": "^8.5.0",
+    "husky": "^7.0.4",
+    "jest": "^27.5.1",
+    "nodemon": "^2.0.15",
+    "prettier": "^2.6.0",
+    "sequelize-cli": "^6.4.1",
+    "ts-jest": "^27.1.4",
+    "ts-node": "^10.7.0",
+    "tslint": "^6.1.3",
+    "typescript": "^4.6.2",
+    "typescript-eslint-parser": "^22.0.0"
+  }
+}
