@@ -1,3 +1,8 @@
+input items {
+  dishName: String
+  price: Float
+}
+
 type restaurantDetailsForMenu {
   id: Int,
   name: String,
@@ -5,6 +10,20 @@ type restaurantDetailsForMenu {
 
 type restaurantDetails {
   name: String
+}
+
+input newOrderAttr {
+  userId: Int,
+  restaurantId: Int,
+  items: [items],
+  totalAmount: Float,
+}
+
+type orderDetails {
+  transactionId: String
+  orderNumber: String
+  status: String
+  createdAt: String
 }
 
 type getRestaurants {
@@ -34,4 +53,8 @@ type Query {
   searchMenuQuery(query: String): [menuDetails]
   getRestaurantsQuery(time: String): [getRestaurants]
   searchMenuByPriceRangeQuery(maxPrice: Float, minPrice: Float): [menuDetails]
+}
+
+type Mutation {
+  newOrderMutation(newOrderParams:newOrderAttr): orderDetails
 }
