@@ -1,8 +1,12 @@
 import pino from 'pino';
 
+interface DayMapperInterface {
+  [key: string]: string;
+}
+
 const logger = pino();
 
-const dayMapper = {
+const dayMapper: DayMapperInterface = {
   Mon: 'MON',
   Tues: 'TUE',
   Weds: 'WED',

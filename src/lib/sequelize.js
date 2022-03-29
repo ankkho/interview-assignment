@@ -60,8 +60,9 @@ const sequelize = new Sequelize('db', 'user', 'password', {
 	// pool configuration used to pool database connections
 	pool: {
 		max: 5,
+		min: 0,
 		idle: 30000,
-		acquire: 60000
+		acquire: 600000
 	}
 });
 

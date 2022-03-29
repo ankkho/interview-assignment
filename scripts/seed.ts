@@ -45,27 +45,23 @@ const seedRestaurantData = async () => {
       }
     );
 
-    // @ts-ignore
-    openingHours.split('/').forEach((details) => {
+    openingHours.split('/').forEach((details: string) => {
       const data = details.split(/(\d+)/);
 
-      // @ts-ignore
-      data.forEach(async (content) => {
+      data.forEach(async (content: string) => {
         const contentValue = content.includes(',')
           ? content.split(',')
           : [content];
 
-        // @ts-ignore
         const allDays = contentValue
-          .filter((d) => Object.keys(dayMapper).includes(d.trim()))
-          .map((v) => v.trim())
-          .map((v) => dayMapper[v]);
+          .filter((d: string) => Object.keys(dayMapper).includes(d.trim()))
+          .map((v: string) => v.trim())
+          .map((v: string) => dayMapper[v]);
         delete data[0];
 
         if (allDays.length) {
-          // @ts-ignore
           const time = data
-            .filter((v) => !!v)
+            .filter((v: string) => !!v)
             .join('')
             .split('-');
 
@@ -73,7 +69,6 @@ const seedRestaurantData = async () => {
           const closeTime = getTwentyFourHourTime(replaceAt(time[1]));
 
           await openingHour.create({
-            // @ts-ignore
             day: allDays,
             from: new Date(`01-3-2022 ${openTime} UTC`).getTime(),
             to: new Date(`01-3-2022 ${closeTime} UTC`).getTime(),
