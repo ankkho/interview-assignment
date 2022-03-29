@@ -3,6 +3,24 @@ type restaurantDetailsForMenu {
   name: String,
 }
 
+type restaurantDetails {
+  name: String
+}
+
+type getRestaurants {
+  restaurantId: Int
+  from: String
+  to: String
+  day: String
+  restaurant: restaurantDetails
+}
+
+type userDetails {
+  id: Int
+  name: String
+  cashBalance: Float
+}
+
 type menuDetails {
   id: Int,
   dishName: String,
@@ -12,6 +30,8 @@ type menuDetails {
 
 type Query {
   pingQuery: String
+  searchRestaurantQuery(query: String): [restaurantDetails]
   searchMenuQuery(query: String): [menuDetails]
+  getRestaurantsQuery(time: String): [getRestaurants]
   searchMenuByPriceRangeQuery(maxPrice: Float, minPrice: Float): [menuDetails]
 }
