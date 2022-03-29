@@ -1,0 +1,17 @@
+type restaurantDetailsForMenu {
+  id: Int,
+  name: String,
+}
+
+type menuDetails {
+  id: Int,
+  dishName: String,
+  price: Float,
+  restaurant: restaurantDetailsForMenu
+}
+
+type Query {
+  pingQuery: String
+  searchMenuQuery(query: String): [menuDetails]
+  searchMenuByPriceRangeQuery(maxPrice: Float, minPrice: Float): [menuDetails]
+}
