@@ -10,12 +10,15 @@
   "scripts": {
     "prettier": "prettier --config .prettierrc './**/*.ts' --write",
     "prepare": "husky install",
-    "lint:fix": "tslint --fix ./**/*.ts",
-    "build": "tsc -p . && cp package.json build/",
+    "lint:fix": "tslint --fix -q ./**/*.ts",
+    "build": "tsc -p . && cp ./package.json build/",
     "start": "ts-node --pretty ./src/server.ts",
     "dev": "nodemon",
-    "seed": "yarn build && node build/scripts/seed.js",
-    "test": "jest --coverage --verbose --silent --runInBand"
+    "seed": "yarn build && node build/scripts/seed.js"
+  },
+  "engineStrict": true,
+  "engines": {
+    "node": ">=16.14.1"
   },
   "dependencies": {
     "@types/express-pino-logger": "^4.0.3",
@@ -41,7 +44,6 @@
     "@types/validator": "^13.7.1",
     "eslint-config-prettier": "^8.5.0",
     "husky": "^7.0.4",
-    "jest": "^27.5.1",
     "nodemon": "^2.0.15",
     "prettier": "^2.6.0",
     "sequelize-cli": "^6.4.1",

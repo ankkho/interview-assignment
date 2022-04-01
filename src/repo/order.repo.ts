@@ -21,7 +21,7 @@ const createNewOrder = async (
   const newUserCashBalance = subtract(userCashBalance, totalAmount);
   const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
 
-  const resp = await sequelize.transaction(function (t: Function) {
+  const resp = await sequelize.transaction(function (t: unknown) {
     return Promise.all([
       order.create(
         {
