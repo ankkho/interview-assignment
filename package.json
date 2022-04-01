@@ -11,7 +11,9 @@
     "prettier": "prettier --config .prettierrc './**/*.ts' --write",
     "prepare": "husky install",
     "lint:fix": "tslint --fix -q ./**/*.ts",
-    "build": "tsc -p . && cp ./package.json build/",
+    "build:config": "ts-node --pretty ./config/config.ts",
+    "cp": "cp package.json build/ && cp -r config build/",
+    "build": "npm run build:config && tsc -p . && npm run cp",
     "start": "ts-node --pretty ./src/server.ts",
     "dev": "nodemon",
     "seed": "yarn build && node build/scripts/seed.js"

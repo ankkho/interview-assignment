@@ -1,13 +1,15 @@
 const Sequelize = require('sequelize')
 require('pg').defaults.parseInt8 = true;
 
-const sequelize = new Sequelize('db', 'user', 'password', {
+const { NODE_ENV, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
+
+const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
 	// the sql dialect of the database
 	// currently supported: 'mysql', 'sqlite', 'postgres', 'mssql'
 	dialect: 'postgres',
 
 	// custom host; default: localhost
-	host: process.env.NODE_ENV === 'development' ? '127.0.0.1' : process.env.DB_HOST,
+	host: NODE_ENV === 'development' ? '127.0.0.1' : DB_HOST,
 
 	// custom port; default: dialect default
 	port: 5432,
@@ -49,7 +51,10 @@ const sequelize = new Sequelize('db', 'user', 'password', {
 		charset: 'utf8',
 		dialectOptions: {
 			collate: 'utf8_general_ci',
-			ssl: process.env.NODE_ENV !== 'dev' ? 'Amazon RDS' : ''
+			ssl: {
+				require: true,
+				rejectUnauthorized: false
+			},
 		},
 		timestamps: true
 	},
