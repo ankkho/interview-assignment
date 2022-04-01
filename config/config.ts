@@ -1,7 +1,6 @@
 import fs from 'fs';
 import { logger } from '../src/utils';
-const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } =
-  process.env;
+const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
 
 const config = {
   development: {

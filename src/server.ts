@@ -1,6 +1,4 @@
-import * as dotenv from 'dotenv';
-dotenv.config({ path: __dirname + '/.env' });
-
+import 'dotenv/config';
 import express from 'express';
 
 import { ApolloServer } from 'apollo-server-express';
@@ -8,7 +6,7 @@ import { schema as schemaPublic } from '.';
 import pino from 'express-pino-logger';
 import { logger } from './utils';
 
-const server = new ApolloServer({ schema: schemaPublic });
+const server = new ApolloServer({ schema: schemaPublic, introspection: true });
 const app = express();
 
 async function startServer() {

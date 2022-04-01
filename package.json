@@ -10,7 +10,7 @@
   "scripts": {
     "prettier": "prettier --config .prettierrc './**/*.ts' --write",
     "prepare": "husky install",
-    "lint:fix": "tslint --fix -q ./**/*.ts",
+    "lint:fix": "tslint --fix --quiet ./**/*.ts",
     "build:config": "ts-node --pretty ./config/config.ts",
     "cp": "cp package.json build/ && cp -r config build/",
     "build": "npm run build:config && tsc -p . && npm run cp",
