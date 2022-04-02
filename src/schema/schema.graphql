@@ -26,8 +26,7 @@ type restaurantDetails {
 input newOrderAttr {
   userId: Int,
   restaurantId: Int,
-  items: [items],
-  totalAmount: Float,
+  itemIds: [Int],
 }
 
 type orderDetails {

@@ -1,13 +1,14 @@
-interface items {
-  dishName: string;
-  price: number;
-}
-
 interface orderAttributes {
   userId: number;
   restaurantId: number;
-  items: [items];
-  totalAmount: number;
+  itemIds: number[];
+}
+
+interface createNewOrderAttributes {
+  userCashBalance: number;
+  restaurantCashBalance: number;
+  userId: number;
+  restaurantId: number;
 }
 
 interface orderCreateRespAttribute {
@@ -17,4 +18,4 @@ interface orderCreateRespAttribute {
   status: string;
 }
 
-export { orderAttributes, orderCreateRespAttribute };
+export { orderAttributes, orderCreateRespAttribute, createNewOrderAttributes };

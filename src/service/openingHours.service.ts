@@ -21,8 +21,8 @@ const getRestaurantsByTime = async (
 
     return {
       ...others,
-      from: new Date(from).toLocaleString('en-GB', { timeZone: 'UTC' }),
-      to: new Date(to).toLocaleString('en-GB', { timeZone: 'UTC' })
+      from: new Date(from).toLocaleTimeString('en-GB', { timeZone: 'UTC' }),
+      to: new Date(to).toLocaleTimeString('en-GB', { timeZone: 'UTC' })
     };
   });
 };

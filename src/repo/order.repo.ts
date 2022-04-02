@@ -1,27 +1,15 @@
 import * as crypto from 'crypto';
-import { subtract, add } from 'ramda';
 import models from '../../models';
-import { orderAttributes, orderCreateRespAttribute } from '../interfaces/order';
+import { createNewOrderAttributes, orderCreateRespAttribute } from '../interfaces/order';
 
 const { sequelize, order, user, restaurant } = models;
 
 const createNewOrder = async (
-  orderAttr: orderAttributes
+  orderAttr: createNewOrderAttributes
 ): Promise<orderCreateRespAttribute> => {
-  const { userId, restaurantId, totalAmount } = orderAttr;
+  const { userId, restaurantId, userCashBalance, restaurantCashBalance } = orderAttr;
 
-  const { cashBalance: userCashBalance } = await user.findByPk(userId, {
-    raw: true
-  });
-  const { cashBalance: restaurantCashBalance } = await restaurant.findByPk(
-    restaurantId,
-    { raw: true }
-  );
-
-  const newUserCashBalance = subtract(userCashBalance, totalAmount);
-  const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
-
-  const resp = await sequelize.transaction(function (t: unknown) {
+  const resp = await sequelize.transaction(function (t: Function) {
     return Promise.all([
       order.create(
         {
@@ -34,7 +22,7 @@ const createNewOrder = async (
       ),
       user.update(
         {
-          cashBalance: Number(newUserCashBalance).toFixed(2)
+          cashBalance: Number(userCashBalance).toFixed(2)
         },
         {
           where: {
@@ -45,7 +33,7 @@ const createNewOrder = async (
       ),
       restaurant.update(
         {
-          cashBalance: Number(newRestaurantAmount).toFixed(2)
+          cashBalance: Number(restaurantCashBalance).toFixed(2)
         },
         {
           where: {
