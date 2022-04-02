@@ -11,62 +11,67 @@ const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
   try {
     const { userId, itemIds, restaurantId } = orderAttrs;
     const userDetails = await user.findByPk(userId, { raw: true });
-    const restaurantDetails = await restaurant.findByPk(restaurantId, {raw: true})
-  
+    const restaurantDetails = await restaurant.findByPk(restaurantId, {
+      raw: true
+    });
+
     if (isNil(userDetails)) {
       logger.info('User does not exists', {
         userId
-      })
+      });
 
-      throw new ApolloError('Sorry, no such user exists!', 'CAN_NOT_FETCH_BY_ID')
+      throw new ApolloError(
+        'Sorry, no such user exists!',
+        'CAN_NOT_FETCH_BY_ID'
+      );
     }
 
     if (isNil(restaurantDetails)) {
       logger.info('Restaurant does not exists', {
         restaurantId
-      })
-      return 'Sorry, no such restaurant exists!'
+      });
+      return 'Sorry, no such restaurant exists!';
     }
-  
-    const itemDetails = await Promise.all(itemIds.map(id => menu.findByPk(id, {raw: true})))  
-    
+
+    const itemDetails = await Promise.all(
+      itemIds.map((id) => menu.findByPk(id, { raw: true }))
+    );
+
     if (itemDetails.includes(null)) {
       logger.info('Item does not exists', {
         itemIds,
         restaurantId
-      })
-      return 'Please provide valid item details!'
+      });
+      return 'Please provide valid item details!';
     }
-    
-  
-    return itemDetails
-  //   const { cashBalance } = userDetails;
 
-  // const { cashBalance: userCashBalance } = await user.findByPk(userId, {
-  //   raw: true
-  // });
-  // const { cashBalance: restaurantCashBalance } = await restaurant.findByPk(
-  //   restaurantId,
-  //   { raw: true }
-  // );
+    return itemDetails;
+    //   const { cashBalance } = userDetails;
 
-  // const newUserCashBalance = subtract(userCashBalance, totalAmount);
-  // const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
+    // const { cashBalance: userCashBalance } = await user.findByPk(userId, {
+    //   raw: true
+    // });
+    // const { cashBalance: restaurantCashBalance } = await restaurant.findByPk(
+    //   restaurantId,
+    //   { raw: true }
+    // );
 
-  
-    // check for item and restautant 
+    // const newUserCashBalance = subtract(userCashBalance, totalAmount);
+    // const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
+
+    // check for item and restautant
     // cal totl amount
-  
+
     // if (gt(totalAmount, cashBalance)) {
     //   logger.info('User cash balance is not sufficient', {
     //     userId,
     //     cashBalance,
     //     totalAmount
     //   });
-  
+
     //   return 'Sorry, Insufficient cash balance!';
     // }
-  
+
     // return createNewOrder({ ...orderAttrs });
   } catch (error) {
     logger.error('Error', error);

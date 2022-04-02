@@ -1,13 +1,17 @@
 import * as crypto from 'crypto';
 import models from '../../models';
-import { createNewOrderAttributes, orderCreateRespAttribute } from '../interfaces/order';
+import {
+  createNewOrderAttributes,
+  orderCreateRespAttribute
+} from '../interfaces/order';
 
 const { sequelize, order, user, restaurant } = models;
 
 const createNewOrder = async (
   orderAttr: createNewOrderAttributes
 ): Promise<orderCreateRespAttribute> => {
-  const { userId, restaurantId, userCashBalance, restaurantCashBalance } = orderAttr;
+  const { userId, restaurantId, userCashBalance, restaurantCashBalance } =
+    orderAttr;
 
   const resp = await sequelize.transaction(function (t: Function) {
     return Promise.all([
