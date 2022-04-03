@@ -1,80 +1,124 @@
-import { gt, isNil, subtract, add } from 'ramda';
-import models from '../../models';
-// import { createNewOrder } from '../repo/order.repo';
+import { gt, isNil, subtract, add, isEmpty, multiply } from 'ramda';
+import { createNewOrder } from '../repo/order.repo';
 import { logger } from '../utils';
 import { orderAttributes } from '../interfaces/order';
-import { ApolloError } from 'apollo-server-express';
-
-const { user, restaurant, menu } = models;
+import { findUserById } from '../repo/user.repo';
+import { findRestaurantById } from '../repo/restaurant.repo';
+import { findMenuById } from '../repo/menu.repo';
 
 const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
   try {
-    const { userId, itemIds, restaurantId } = orderAttrs;
-    const userDetails = await user.findByPk(userId, { raw: true });
-    const restaurantDetails = await restaurant.findByPk(restaurantId, {
-      raw: true
-    });
+    const { userId, itemDetails, restaurantId } = orderAttrs;
+    const userDetails = await findUserById(userId);
+    const restaurantDetails = await findRestaurantById(restaurantId);
 
     if (isNil(userDetails)) {
-      logger.info('User does not exists', {
-        userId
-      });
-
-      throw new ApolloError(
-        'Sorry, no such user exists!',
-        'CAN_NOT_FETCH_BY_ID'
+      logger.info(
+        {
+          userId
+        },
+        'User does not exists'
       );
+
+      return {
+        valid: false,
+        message: 'Sorry, no such user exists!'
+      };
     }
 
     if (isNil(restaurantDetails)) {
-      logger.info('Restaurant does not exists', {
-        restaurantId
-      });
-      return 'Sorry, no such restaurant exists!';
+      logger.info(
+        {
+          restaurantId
+        },
+        'Restaurant does not exists'
+      );
+
+      return {
+        valid: false,
+        message: 'Sorry, no such restaurant exists!'
+      };
     }
 
-    const itemDetails = await Promise.all(
-      itemIds.map((id) => menu.findByPk(id, { raw: true }))
+    const menuDetails = await Promise.all(
+      itemDetails.map(async (val) => {
+        const { id, qty } = val;
+        return await findMenuById(id, restaurantId);
+      })
     );
 
-    if (itemDetails.includes(null)) {
-      logger.info('Item does not exists', {
-        itemIds,
-        restaurantId
-      });
-      return 'Please provide valid item details!';
+    if (isEmpty(menuDetails.flat())) {
+      logger.info(
+        {
+          itemDetails,
+          restaurantId
+        },
+        'Item does not exists'
+      );
+
+      return {
+        valid: false,
+        message:
+          'Please provide valid menu item ids which belongs to this restaurant!'
+      };
     }
 
-    return itemDetails;
-    //   const { cashBalance } = userDetails;
+    const menuDetailsWithQty = menuDetails.flat().map((details) => {
+      const { qty } = itemDetails.filter((val) => val.id === details.id)[0];
 
-    // const { cashBalance: userCashBalance } = await user.findByPk(userId, {
-    //   raw: true
-    // });
-    // const { cashBalance: restaurantCashBalance } = await restaurant.findByPk(
-    //   restaurantId,
-    //   { raw: true }
-    // );
+      return {
+        ...details,
+        qty
+      };
+    });
 
-    // const newUserCashBalance = subtract(userCashBalance, totalAmount);
-    // const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
+    const totalAmount = menuDetailsWithQty.map((details) => {
+      const { price, qty } = details;
+      return multiply(price, qty);
+    })[0];
 
-    // check for item and restautant
-    // cal totl amount
+    const { cashBalance: userCashBalance } = userDetails;
+    const { cashBalance: restaurantCashBalance } = restaurantDetails;
 
-    // if (gt(totalAmount, cashBalance)) {
-    //   logger.info('User cash balance is not sufficient', {
-    //     userId,
-    //     cashBalance,
-    //     totalAmount
-    //   });
+    if (gt(totalAmount, userCashBalance)) {
+      logger.info(
+        { orderAttrs, totalAmount, userCashBalance },
+        'Insufficient Balance'
+      );
+      return {
+        valid: false,
+        data: [],
+        message: 'Sorry, insufficient balance!'
+      };
+    }
 
-    //   return 'Sorry, Insufficient cash balance!';
-    // }
+    const newUserCashBalance = subtract(userCashBalance, totalAmount);
+    const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
 
-    // return createNewOrder({ ...orderAttrs });
+    const response = await createNewOrder({
+      userId,
+      restaurantId,
+      totalAmount,
+      //@ts-ignore,
+      items: menuDetailsWithQty,
+      userCashBalance: 10,
+      restaurantCashBalance: newRestaurantAmount
+    });
+
+    if (!isNil(response)) {
+      return {
+        valid: true,
+        data: response,
+        message: 'Order placed successfully!'
+      };
+    }
+
+    return {
+      valid: false,
+      message: 'Sorry, something went wrong. Order was not placed!'
+    };
   } catch (error) {
-    logger.error('Error', error);
+    logger.error(error, 'Error');
     // throw new Error(error)
   }
 };
