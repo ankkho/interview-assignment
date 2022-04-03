@@ -18,7 +18,7 @@ const newOrderMutation = async (
     throw new ApolloError(message, errorCode, errorDetails);
   }
 
-  return others
+  return others;
 };
 
 export { newOrderMutation };
