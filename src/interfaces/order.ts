@@ -12,7 +12,7 @@ interface ItemDetailsWithQty extends ItemDetails {
 interface OrderAttributes {
   userId: number;
   restaurantId: number;
-  ItemDetails: [ItemDetails];
+  itemDetails: [ItemDetails];
 }
 
 interface CreateNewOrderAttributes {
@@ -26,7 +26,7 @@ interface CreateNewOrderAttributes {
 interface OrderCreateRespAttribute {
   orderNumber: number;
   transactionId: number;
-  createdAt: string;
+  createdAt: Date;
   status: string;
 }
 

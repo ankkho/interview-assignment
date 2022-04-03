@@ -53,13 +53,7 @@ const createNewOrder = async (
   return {
     orderNumber,
     transactionId,
-    createdAt: new Date(createdAt).toLocaleTimeString([], {
-      year: 'numeric',
-      month: 'numeric',
-      day: 'numeric',
-      hour: '2-digit',
-      minute: '2-digit'
-    }),
+    createdAt: new Date(createdAt),
     status
   };
 };

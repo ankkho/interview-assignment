@@ -8,7 +8,7 @@ import { findMenuById } from '../repo/menu.repo';
 
 const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
   try {
-    const { userId, ItemDetails, restaurantId } = orderAttrs;
+    const { userId, itemDetails, restaurantId } = orderAttrs;
     const userDetails = await findUserById(userId);
     const restaurantDetails = await findRestaurantById(restaurantId);
 
@@ -41,8 +41,8 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
     }
 
     const menuDetails = await Promise.all(
-      ItemDetails.map(async (val) => {
-        const { id, qty } = val;
+      itemDetails.map(async (val) => {
+        const { id } = val;
         return await findMenuById(id, restaurantId);
       })
     );
@@ -50,7 +50,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
     if (isEmpty(menuDetails.flat())) {
       logger.info(
         {
-          ItemDetails,
+          itemDetails,
           restaurantId
         },
         'Item does not exists'
@@ -64,7 +64,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
     }
 
     const menuDetailsWithQty = menuDetails.flat().map((details) => {
-      const { qty } = ItemDetails.filter((val) => val.id === details.id)[0];
+      const { qty } = itemDetails.filter((val) => val.id === details.id)[0];
 
       return {
         ...details,
@@ -101,15 +101,15 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
       totalAmount,
       //@ts-ignore,
       items: menuDetailsWithQty,
-      userCashBalance: 10,
+      //@ts-ignore,
+      userCashBalance: newUserCashBalance,
       restaurantCashBalance: newRestaurantAmount
     });
 
     if (!isNil(response)) {
       return {
-        valid: true,
         data: response,
-        message: 'Order placed successfully!'
+        message: 'Order created successfully!'
       };
     }
 

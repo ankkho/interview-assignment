@@ -3,7 +3,7 @@ import { sequelize, Sequelize } from '../src/lib/sequelize';
 
 const menu = sequelize.define('menu', {
   dishName: Sequelize.TEXT,
-  price: Sequelize.DECIMAL,
+  price: Sequelize.FLOAT,
   restaurantId: Sequelize.INTEGER
 });
 

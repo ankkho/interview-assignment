@@ -11,6 +11,11 @@ enum days {
   SUN
 }
 
+input itemDetailsAttr {
+  id: Int
+  qty: Int
+}
+
 input items {
   dishName: String
   price: Float
@@ -29,14 +34,19 @@ type restaurantDetails {
 input newOrderAttr {
   userId: Int,
   restaurantId: Int,
-  itemIds: [Int],
+  itemDetails: [itemDetailsAttr],
 }
 
 type orderDetails {
   transactionId: String
   orderNumber: String
   status: String
-  createdAt: Date
+  createdAt: DateTime
+}
+
+type newOrderAttrResp {
+  message: String
+  data: orderDetails
 }
 
 type getRestaurants {
@@ -69,5 +79,5 @@ type Query {
 }
 
 type Mutation {
-  newOrderMutation(newOrderParams:newOrderAttr): orderDetails
+  newOrderMutation(newOrderParams: newOrderAttr): newOrderAttrResp
 }

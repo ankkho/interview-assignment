@@ -15,7 +15,7 @@ const order = sequelize.define('order', {
     'IN-PRGORESS',
     'COMPLETED'
   ),
-  totalAmount: Sequelize.DECIMAL
+  totalAmount: Sequelize.FLOAT
 });
 
 user.hasMany(order);
