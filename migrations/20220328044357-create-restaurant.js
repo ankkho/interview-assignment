@@ -13,7 +13,7 @@ module.exports = {
         allowNull: false
       },
       cashBalance: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.FLOAT,
         allowNull: false
       },
       createdAt: {

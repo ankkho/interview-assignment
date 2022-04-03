@@ -19,7 +19,7 @@ module.exports = {
         type: Sequelize.STRING
       },
       transactionAmount: {
-        type: Sequelize.DECIMAL
+        type: Sequelize.FLOAT
       },
       transactionDate: {
         type: Sequelize.DATE

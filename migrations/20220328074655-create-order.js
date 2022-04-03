@@ -34,7 +34,7 @@ module.exports = {
         allowNull: false,
       },
       totalAmount: {
-        type: Sequelize.DECIMAL,
+        type: Sequelize.FLOAT,
         allowNull: false,
       },
       createdAt: {
