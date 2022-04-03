@@ -28,7 +28,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
         },
         'User does not exists'
       );
-      
+
       return {
         valid: false,
         errorCode: USER_NOT_FOUND
@@ -107,9 +107,8 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
       userId,
       restaurantId,
       totalAmount,
-      //@ts-ignore,
+      //@ts-ignore
       items: menuDetailsWithQty,
-      //@ts-ignore,
       userCashBalance: newUserCashBalance,
       restaurantCashBalance: newRestaurantAmount
     });

@@ -14,7 +14,7 @@ const server = new ApolloServer({
     const {extensions} = err
     const {code}  = extensions
     const {message, statusCode} = getErrorMessage(code);
-    
+
     return {
       message,
       statusCode

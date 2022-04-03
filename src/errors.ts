@@ -33,7 +33,7 @@ const errorType: IErrorType = {
         message: 'Something went wrong',
         statusCode: 500
     }
-}  
+}
 
 const getErrorMessage = (errorName: string):IGetErrorMessageResp => errorType[errorName]
 

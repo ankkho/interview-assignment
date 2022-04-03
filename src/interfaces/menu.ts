@@ -10,8 +10,15 @@ interface SearchAttributes {
   limit: number;
 }
 
+interface MenuDetails {
+  dishName: string;
+  id: number;
+  price: number;
+  restaurantId: number
+}
+
 interface get {
   get: Function;
 }
 
-export { GetMenuByPriceAttributes, SearchAttributes, get };
+export { GetMenuByPriceAttributes, SearchAttributes, get, MenuDetails };

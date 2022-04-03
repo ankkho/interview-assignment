@@ -2,7 +2,8 @@ import models from '../../models';
 import {
   GetMenuByPriceAttributes,
   SearchAttributes,
-  get
+  get,
+  MenuDetails
 } from '../interfaces/menu';
 
 const { menu, Sequelize, restaurant } = models;
@@ -52,7 +53,7 @@ const search = (SearchAttributes: SearchAttributes): Array<object> => {
   });
 };
 
-const findMenuById = (id: number, restaurantId: number) =>
+const findMenuById = (id: number, restaurantId: number):Promise<MenuDetails> =>
   menu.findAll({
     attributes: {
       exclude: ['createdAt', 'updatedAt']
