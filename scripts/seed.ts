@@ -41,6 +41,7 @@ const seedRestaurantData = async () => {
       menu: menuDetails,
       openingHours
     } = element;
+
     const { id } = await restaurant.create(
       { name: restaurantName, cashBalance, menus: menuDetails },
       {
@@ -71,7 +72,6 @@ const seedRestaurantData = async () => {
           const openTime = getTwentyFourHourTime(replaceAt(time[0]));
           const closeTime = getTwentyFourHourTime(replaceAt(time[1]));
 
-          await new Promise((resolve) => setTimeout(resolve, 2000));
           await openingHour.create({
             day: allDays,
             from: new Date(`01-3-2022 ${openTime} UTC`).getTime(),
