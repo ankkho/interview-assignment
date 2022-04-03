@@ -36,6 +36,10 @@ Starting docker:
 More options:  
 `npx sequelize --help`
 
+---
+
+Graphql url: https://afternoon-savannah-16236.herokuapp.com/graphql
+
 ----
 
 Query:
