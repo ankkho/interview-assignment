@@ -8,4 +8,4 @@ RUN npm i --production --ignore-scripts
 
 EXPOSE 4000
 
-CMD [ "npm", "start" ]
+CMD [ "node", "./src/server.js" ]
