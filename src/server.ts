@@ -6,9 +6,7 @@ import pino from 'express-pino-logger';
 import { logger } from './utils';
 import { getErrorMessage } from './errors';
 
-const {
-  PORT
-} = process.env;
+const { PORT } = process.env;
 
 const server = new ApolloServer({
   schema: schemaPublic,

@@ -14,7 +14,8 @@
     "build:config": "ts-node --pretty ./config/config.ts",
     "cp": "cp package.json build/ && cp -r config build/ && cp -r ./src/schema build/src/",
     "build": "npm run build:config && tsc -p . && npm run cp",
-    "start": "ts-node --pretty ./src/server.ts",
+    "postinstall": "npm run build",
+    "start": "node ./build/src/server.js",
     "dev": "npm run build && nodemon --exec ts-node ./src/server.ts",
     "seed": "npm run build && node build/scripts/seed.js"
   },
