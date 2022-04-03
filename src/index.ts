@@ -1,6 +1,6 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { DateTimeResolver, DateResolver } from "graphql-scalars"
+import { DateTimeResolver, DateResolver } from 'graphql-scalars';
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import resolvers from './resolvers';
 

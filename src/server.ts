@@ -1,6 +1,5 @@
 import 'dotenv/config';
 import express from 'express';
-
 import { ApolloServer } from 'apollo-server-express';
 import { schema as schemaPublic } from '.';
 import pino from 'express-pino-logger';
@@ -9,7 +8,6 @@ import { getErrorMessage } from './errors';
 
 const server = new ApolloServer({
   schema: schemaPublic,
-  introspection: true,
   formatError: (err) => {
     const { extensions } = err;
     const { code } = extensions;

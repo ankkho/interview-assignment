@@ -15,8 +15,8 @@
     "cp": "cp package.json build/ && cp -r config build/ && cp -r ./src/schema build/src/",
     "build": "npm run build:config && tsc -p . && npm run cp",
     "start": "node ./src/server.js",
-    "dev": "nodemon --exec ts-node ./src/server.ts",
-    "seed": "yarn build && node build/scripts/seed.js"
+    "dev": "npm run build && nodemon --exec ts-node ./src/server.ts",
+    "seed": "npm run build && node build/scripts/seed.js"
   },
   "engineStrict": true,
   "engines": {
