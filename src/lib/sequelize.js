@@ -1,9 +1,9 @@
 const Sequelize = require('sequelize')
 require('pg').defaults.parseInt8 = true;
 
-const { NODE_ENV, DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
+const { NODE_ENV, DB_HOST, DATABASE_URL } = process.env;
 
-const sequelize = new Sequelize(DB_NAME, DB_USERNAME, DB_PASSWORD, {
+const sequelize = new Sequelize(DATABASE_URL, {
 	// the sql dialect of the database
 	// currently supported: 'mysql', 'sqlite', 'postgres', 'mssql'
 	dialect: 'postgres',
