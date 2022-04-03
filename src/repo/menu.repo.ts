@@ -53,7 +53,7 @@ const search = (SearchAttributes: SearchAttributes): Array<object> => {
   });
 };
 
-const findMenuById = (id: number, restaurantId: number):Promise<MenuDetails> =>
+const findMenuById = (id: number, restaurantId: number): Promise<MenuDetails> =>
   menu.findAll({
     attributes: {
       exclude: ['createdAt', 'updatedAt']

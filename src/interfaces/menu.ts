@@ -14,7 +14,7 @@ interface MenuDetails {
   dishName: string;
   id: number;
   price: number;
-  restaurantId: number
+  restaurantId: number;
 }
 
 interface get {

@@ -1,9 +1,6 @@
-
 interface UserDetails {
-    id: number;
-    cashBalance: number;
+  id: number;
+  cashBalance: number;
 }
 
-export {
-    UserDetails
-}
+export { UserDetails };

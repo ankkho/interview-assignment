@@ -13,9 +13,11 @@ const {
   RESTAURANT_NOT_FOUND,
   ITEM_NOT_FOUND,
   INTERNAL_SERVER_ERROR
-} = errorName
+} = errorName;
 
-const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderResponse> => {
+const placeNewOrder = async (
+  orderAttrs: OrderAttributes
+): Promise<NewOrderResponse> => {
   try {
     const { userId, itemDetails, restaurantId } = orderAttrs;
     const userDetails = await findUserById(userId);
@@ -32,7 +34,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
       return {
         valid: false,
         errorCode: USER_NOT_FOUND
-      }
+      };
     }
 
     if (isNil(restaurantDetails)) {
@@ -46,7 +48,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
       return {
         valid: false,
         errorCode: RESTAURANT_NOT_FOUND
-      }
+      };
     }
 
     const menuDetails = await Promise.all(
@@ -68,7 +70,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
       return {
         valid: false,
         errorCode: ITEM_NOT_FOUND
-      }
+      };
     }
 
     const menuDetailsWithQty = menuDetails.flat().map((details) => {
@@ -93,11 +95,11 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
         { orderAttrs, totalAmount, userCashBalance },
         'Insufficient Balance'
       );
-      
+
       return {
         valid: false,
         errorCode: INSUFFICIENT_BALANCE
-      }
+      };
     }
 
     const newUserCashBalance = subtract(userCashBalance, totalAmount);
@@ -124,13 +126,13 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderRespo
     return {
       valid: false,
       code: INTERNAL_SERVER_ERROR
-    }
+    };
   } catch (error) {
     logger.error(error, 'Error');
     return {
       valid: false,
       code: INTERNAL_SERVER_ERROR
-    }
+    };
   }
 };
 

@@ -11,14 +11,14 @@ const server = new ApolloServer({
   schema: schemaPublic,
   introspection: true,
   formatError: (err) => {
-    const {extensions} = err
-    const {code}  = extensions
-    const {message, statusCode} = getErrorMessage(code);
+    const { extensions } = err;
+    const { code } = extensions;
+    const { message, statusCode } = getErrorMessage(code);
 
     return {
       message,
       statusCode
-    }
+    };
   }
 });
 

@@ -9,22 +9,17 @@ const newOrderMutation = async (
   args: { newOrderParams: OrderAttributes }
 ) => {
   const { newOrderParams } = args;
-  const {valid, ...others} = await placeNewOrder({ ...newOrderParams })  
+  const { valid, ...others } = await placeNewOrder({ ...newOrderParams });
 
   if (!valid) {
-    const{
-      errorCode,
-    } = others
+    const { errorCode } = others;
 
     const errorDetails = getErrorMessage(errorCode || '');
-    
-    const {
-      message
-    } = errorDetails;
+
+    const { message } = errorDetails;
 
     throw new ApolloError(message, errorCode, errorDetails);
   }
-  
 };
 
 export { newOrderMutation };

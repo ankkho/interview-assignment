@@ -35,7 +35,7 @@ interface NewOrderResponse {
   code?: string;
   message?: string;
   errorCode?: string;
-  data?: OrderCreateRespAttribute
+  data?: OrderCreateRespAttribute;
 }
 
 export {
