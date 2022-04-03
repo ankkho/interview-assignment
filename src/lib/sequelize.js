@@ -37,7 +37,7 @@ const sequelize = new Sequelize(DATABASE_URL, {
 	// a flag for using a native library or not.
 	// in the case of 'pg' -- set this to true will allow SSL support
 	// - default: false
-	native: true,
+	native: false,
 
 	// Specify options, which are used when sequelize.define is called.
 	// The following example:

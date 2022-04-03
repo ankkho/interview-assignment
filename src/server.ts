@@ -32,7 +32,10 @@ async function startServer() {
 
 startServer();
 
-const url = (NODE_ENV === 'development') ? `http://localhost:4000${server.graphqlPath}` : APP_URL
+const url =
+  NODE_ENV === 'development'
+    ? `http://localhost:4000${server.graphqlPath}`
+    : APP_URL;
 
 app.listen({ port: PORT || 4000 }, () => {
   logger.info(`Server ready at ${url}`);
