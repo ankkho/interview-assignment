@@ -1,14 +1,14 @@
 import { gt, isNil, subtract, add, isEmpty, multiply } from 'ramda';
 import { createNewOrder } from '../repo/order.repo';
 import { logger } from '../utils';
-import { orderAttributes } from '../interfaces/order';
+import { OrderAttributes } from '../interfaces/order';
 import { findUserById } from '../repo/user.repo';
 import { findRestaurantById } from '../repo/restaurant.repo';
 import { findMenuById } from '../repo/menu.repo';
 
-const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
+const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
   try {
-    const { userId, itemDetails, restaurantId } = orderAttrs;
+    const { userId, ItemDetails, restaurantId } = orderAttrs;
     const userDetails = await findUserById(userId);
     const restaurantDetails = await findRestaurantById(restaurantId);
 
@@ -41,7 +41,7 @@ const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
     }
 
     const menuDetails = await Promise.all(
-      itemDetails.map(async (val) => {
+      ItemDetails.map(async (val) => {
         const { id, qty } = val;
         return await findMenuById(id, restaurantId);
       })
@@ -50,7 +50,7 @@ const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
     if (isEmpty(menuDetails.flat())) {
       logger.info(
         {
-          itemDetails,
+          ItemDetails,
           restaurantId
         },
         'Item does not exists'
@@ -64,7 +64,7 @@ const placeNewOrder = async (orderAttrs: orderAttributes): Promise<unknown> => {
     }
 
     const menuDetailsWithQty = menuDetails.flat().map((details) => {
-      const { qty } = itemDetails.filter((val) => val.id === details.id)[0];
+      const { qty } = ItemDetails.filter((val) => val.id === details.id)[0];
 
       return {
         ...details,

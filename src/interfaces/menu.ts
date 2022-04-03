@@ -1,15 +1,17 @@
-interface getMenuByPriceAttributes {
+interface GetMenuByPriceAttributes {
   minPrice: number;
   maxPrice: number;
-  limit?: number;
+  limit: number;
+  offset: number;
 }
-interface searchAttributes {
+interface SearchAttributes {
   query: string;
-  limit?: number;
+  offset: number;
+  limit: number;
 }
 
 interface get {
   get: Function;
 }
 
-export { getMenuByPriceAttributes, searchAttributes, get };
+export { GetMenuByPriceAttributes, SearchAttributes, get };

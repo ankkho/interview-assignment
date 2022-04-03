@@ -1,9 +1,9 @@
 import { searchMenuByPrice, search } from '../repo/menu.repo';
-import { getMenuByPriceAttributes, searchAttributes } from '../interfaces/menu';
+import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu';
 
-const searchMenuByPriceRange = (getDishes: getMenuByPriceAttributes) =>
+const searchMenuByPriceRange = (getDishes: GetMenuByPriceAttributes) =>
   searchMenuByPrice({ ...getDishes });
 
-const searchMenu = (searchAttr: searchAttributes) => search({ ...searchAttr });
+const searchMenu = (searchAttr: SearchAttributes) => search({ ...searchAttr });
 
 export { searchMenuByPriceRange, searchMenu };

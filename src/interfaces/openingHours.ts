@@ -1,13 +1,14 @@
-interface openingHourAttributes {
+interface OpeningHourAttributes {
   day: string;
   timeUTC: number;
-  limit?: number;
+  limit: number;
+  offset: number;
 }
 
-interface getRestaurantsByTimeAttr {
+interface GetRestaurantsByTimeAttr {
   dateTime: number;
   offset: number;
   limit: number;
 }
 
-export { openingHourAttributes, getRestaurantsByTimeAttr };
+export { OpeningHourAttributes, GetRestaurantsByTimeAttr };

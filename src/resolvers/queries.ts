@@ -2,36 +2,35 @@ import { getRestaurantsByTime } from '../service/openingHours.service';
 import { searchMenuByPriceRange, searchMenu } from '../service/menu.service';
 import { getRestaurantByName } from '../service/restaurant.service';
 
-import { getRestaurantsByTimeAttr } from '../interfaces/openingHours';
-import { getMenuByPriceAttributes, searchAttributes } from '../interfaces/menu';
+import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours';
+import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu';
 
 const getRestaurantsQuery = async (
   parent: {},
-  args: getRestaurantsByTimeAttr,
+  args: GetRestaurantsByTimeAttr,
   context: unknown,
   info: unknown
 ) => {
-  const { time } = args;
-  return getRestaurantsByTime({ time });
+  return getRestaurantsByTime({ ...args });
 };
 
 const searchMenuByPriceRangeQuery = async (
   parent: unknown,
-  args: getMenuByPriceAttributes,
+  args: GetMenuByPriceAttributes,
   context: unknown,
   info: unknown
 ) => searchMenuByPriceRange({ ...args });
 
 const searchRestaurantQuery = async (
   parent: unknown,
-  args: searchAttributes,
+  args: SearchAttributes,
   context: unknown,
   info: unknown
 ) => getRestaurantByName({ ...args });
 
 const searchMenuQuery = async (
   parent: unknown,
-  args: searchAttributes,
+  args: SearchAttributes,
   context: unknown,
   info: unknown
 ) => searchMenu({ ...args });

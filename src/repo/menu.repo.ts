@@ -1,7 +1,7 @@
 import models from '../../models';
 import {
-  getMenuByPriceAttributes,
-  searchAttributes,
+  GetMenuByPriceAttributes,
+  SearchAttributes,
   get
 } from '../interfaces/menu';
 
@@ -9,7 +9,7 @@ const { menu, Sequelize, restaurant } = models;
 const { Op } = Sequelize;
 
 const searchMenuByPrice = async (
-  getDishes: getMenuByPriceAttributes
+  getDishes: GetMenuByPriceAttributes
 ): Promise<object> => {
   const { minPrice, maxPrice, limit, offset } = getDishes;
 
@@ -35,11 +35,12 @@ const searchMenuByPrice = async (
   return resp.map((v: get) => v.get({ plain: true }));
 };
 
-const search = (searchAttributes: searchAttributes): Array<object> => {
-  const { query, limit } = searchAttributes;
+const search = (SearchAttributes: SearchAttributes): Array<object> => {
+  const { query, limit, offset } = SearchAttributes;
 
   return menu.findAll({
     limit,
+    offset,
     order: [['dishName', 'ASC']],
     attributes: {
       exclude: ['createdAt', 'updatedAt']

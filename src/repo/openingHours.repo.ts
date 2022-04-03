@@ -1,19 +1,19 @@
 import models from '../../models';
-import { openingHourAttributes } from '../interfaces/openingHours';
-import { dayMapper } from '../utils';
+import { OpeningHourAttributes } from '../interfaces/openingHours';
 import { get } from '../interfaces/menu';
 
 const { Sequelize, restaurant, openingHour } = models;
 const { Op } = Sequelize;
 
 const getRestaurantsBasedOnTime = async (
-  openingHourAttributes: openingHourAttributes
+  openingHourAttributes: OpeningHourAttributes
 ): Promise<object[]> => {
-  const { limit, day, timeUTC } = openingHourAttributes;
+  const { limit, offset, day, timeUTC } = openingHourAttributes;
 
   // list of restauants based on opening hours
   const resp = await openingHour.findAll({
     limit,
+    offset,
     attributes: {
       exclude: ['createdAt', 'updatedAt']
     },

@@ -1,7 +1,7 @@
 import models from '../../models';
 import {
-  getByTimeAttributes,
-  searchAttributes
+  GetByTimeAttributes,
+  SearchAttributes
 } from '../interfaces/restaurant';
 
 const { Sequelize, restaurant } = models;
@@ -9,12 +9,13 @@ const { Sequelize, restaurant } = models;
 const { Op } = Sequelize;
 
 const searchRestaurant = (
-  searchAttributes: searchAttributes
+  SearchAttributes: SearchAttributes
 ): Promise<object> => {
-  const { query, limit } = searchAttributes;
+  const { query, limit, offset } = SearchAttributes;
 
   return restaurant.findAll({
     limit,
+    offset,
     order: [['name', 'ASC']],
     attributes: {
       exclude: ['createdAt', 'updatedAt']
@@ -27,12 +28,13 @@ const searchRestaurant = (
 };
 
 const getByTime = (
-  getByTimeAttributes: getByTimeAttributes
+  GetByTimeAttributes: GetByTimeAttributes
 ): Promise<object> => {
-  const { startTime, endTime, limit } = getByTimeAttributes;
+  const { startTime, endTime, limit, offset } = GetByTimeAttributes;
 
   return restaurant.findAll({
     limit,
+    offset,
     order: [['name', 'ASC']],
     attributes: {
       exclude: ['createdAt', 'updatedAt']

@@ -1,29 +1,29 @@
-interface itemDetails {
+interface ItemDetails {
   id: number;
   qty: number;
 }
 
-interface itemDetailsWithQty extends itemDetails {
+interface ItemDetailsWithQty extends ItemDetails {
   dishName: string;
   restaurantId: number;
   price: number;
 }
 
-interface orderAttributes {
+interface OrderAttributes {
   userId: number;
   restaurantId: number;
-  itemDetails: [itemDetails];
+  ItemDetails: [ItemDetails];
 }
 
-interface createNewOrderAttributes {
+interface CreateNewOrderAttributes {
   userCashBalance: number;
   restaurantCashBalance: number;
   userId: number;
   restaurantId: number;
-  items: [itemDetailsWithQty];
+  items: [ItemDetailsWithQty];
 }
 
-interface orderCreateRespAttribute {
+interface OrderCreateRespAttribute {
   orderNumber: number;
   transactionId: number;
   createdAt: string;
@@ -31,8 +31,8 @@ interface orderCreateRespAttribute {
 }
 
 export {
-  orderAttributes,
-  orderCreateRespAttribute,
-  createNewOrderAttributes,
-  itemDetailsWithQty
+  OrderAttributes,
+  OrderCreateRespAttribute,
+  CreateNewOrderAttributes,
+  ItemDetailsWithQty
 };

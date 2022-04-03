@@ -1,12 +1,12 @@
 import { getRestaurantsBasedOnTime } from '../repo/openingHours.repo';
-import { getRestaurantsByTimeAttr } from '../interfaces/openingHours';
+import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours';
 import { dayMapper, logger } from '../utils';
 
 const getRestaurantsByTime = async (
-  getRestaurantsByTimeAttr: getRestaurantsByTimeAttr
+  getRestaurantsByTimeAttr: GetRestaurantsByTimeAttr
 ) => {
   try {
-    const { dateTime, limit } = getRestaurantsByTimeAttr;
+    const { dateTime, limit, offset } = getRestaurantsByTimeAttr;
 
     const incomingDateTime = new Date(dateTime);
 
@@ -23,7 +23,8 @@ const getRestaurantsByTime = async (
     const restauants = await getRestaurantsBasedOnTime({
       limit,
       day,
-      timeUTC
+      timeUTC,
+      offset
     });
 
     return restauants.map((va: any) => {

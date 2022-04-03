@@ -1,7 +1,7 @@
 import { searchRestaurant } from '../repo/restaurant.repo';
-import { searchAttributes } from '../interfaces/restaurant';
+import { SearchAttributes } from '../interfaces/restaurant';
 
-const getRestaurantByName = (searchAttr: searchAttributes) =>
+const getRestaurantByName = (searchAttr: SearchAttributes) =>
   searchRestaurant({ ...searchAttr });
 
 export { getRestaurantByName };
