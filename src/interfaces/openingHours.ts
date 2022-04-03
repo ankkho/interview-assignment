@@ -1,16 +1,13 @@
 interface openingHourAttributes {
-  incomingDateTime: {
-    getHours: Function;
-    getDay: Function;
-    getMinutes: Function;
-  };
+  day: string;
   timeUTC: number;
   limit?: number;
 }
 
 interface getRestaurantsByTimeAttr {
-  time: any;
-  limit?: number;
+  dateTime: number;
+  offset: number;
+  limit: number;
 }
 
 export { openingHourAttributes, getRestaurantsByTimeAttr };

@@ -1,30 +1,43 @@
 import { getRestaurantsBasedOnTime } from '../repo/openingHours.repo';
 import { getRestaurantsByTimeAttr } from '../interfaces/openingHours';
+import { dayMapper, logger } from '../utils';
 
 const getRestaurantsByTime = async (
   getRestaurantsByTimeAttr: getRestaurantsByTimeAttr
 ) => {
-  const { time, limit } = getRestaurantsByTimeAttr;
+  try {
+    const { dateTime, limit } = getRestaurantsByTimeAttr;
 
-  const incomingDateTime = new Date(time);
-  const queryTime = `${incomingDateTime.getHours()}:${incomingDateTime.getMinutes()}`;
-  const timeUTC = new Date(`01-3-2022 ${queryTime} UTC`).getTime();
+    const incomingDateTime = new Date(dateTime);
 
-  const restauants = await getRestaurantsBasedOnTime({
-    limit,
-    incomingDateTime,
-    timeUTC
-  });
+    const queryTime = `${incomingDateTime.getHours()}:${incomingDateTime.getMinutes()}`;
+    const timeUTC = new Date(`01-3-2022 ${queryTime} UTC`).getTime();
+    const day = Object.values(dayMapper)[incomingDateTime.getDay()];
 
-  return restauants.map((va: any) => {
-    const { from, to, ...others } = va;
+    logger.info({
+      limit,
+      day,
+      timeUTC
+    });
 
-    return {
-      ...others,
-      from: new Date(from).toLocaleTimeString('en-GB', { timeZone: 'UTC' }),
-      to: new Date(to).toLocaleTimeString('en-GB', { timeZone: 'UTC' })
-    };
-  });
+    const restauants = await getRestaurantsBasedOnTime({
+      limit,
+      day,
+      timeUTC
+    });
+
+    return restauants.map((va: any) => {
+      const { from, to, ...others } = va;
+
+      return {
+        ...others,
+        from: new Date(from).toLocaleTimeString('en-GB', { timeZone: 'UTC' }),
+        to: new Date(to).toLocaleTimeString('en-GB', { timeZone: 'UTC' })
+      };
+    });
+  } catch (error) {
+    logger.error('Error', error);
+  }
 };
 
 export { getRestaurantsByTime };

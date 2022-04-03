@@ -9,17 +9,22 @@ const { Op } = Sequelize;
 const getRestaurantsBasedOnTime = async (
   openingHourAttributes: openingHourAttributes
 ): Promise<object[]> => {
-  const { limit, incomingDateTime, timeUTC } = openingHourAttributes;
-  const day = Object.values(dayMapper)[incomingDateTime.getDay()];
+  const { limit, day, timeUTC } = openingHourAttributes;
 
   // list of restauants based on opening hours
   const resp = await openingHour.findAll({
     limit,
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     include: [
       {
         model: restaurant,
         as: 'restaurant',
-        attributes: ['id', 'name'],
+        attributes: {
+          include: ['id', 'name'],
+          exclude: ['createdAt', 'updatedAt']
+        },
         order: [['name', 'ASC']]
       }
     ],
