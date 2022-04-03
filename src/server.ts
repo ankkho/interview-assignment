@@ -6,6 +6,10 @@ import pino from 'express-pino-logger';
 import { logger } from './utils';
 import { getErrorMessage } from './errors';
 
+const {
+  PORT
+} = process.env;
+
 const server = new ApolloServer({
   schema: schemaPublic,
   formatError: (err) => {
@@ -30,6 +34,6 @@ async function startServer() {
 
 startServer();
 
-app.listen({ port: 4000 }, () => {
+app.listen({ port: PORT || 4000 }, () => {
   logger.info(`Server ready at http://localhost:4000${server.graphqlPath}`);
 });
