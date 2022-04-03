@@ -13,13 +13,12 @@ const newOrderMutation = async (
 
   if (!valid) {
     const { errorCode } = others;
-
     const errorDetails = getErrorMessage(errorCode || '');
-
     const { message } = errorDetails;
-
     throw new ApolloError(message, errorCode, errorDetails);
   }
+
+  return others
 };
 
 export { newOrderMutation };

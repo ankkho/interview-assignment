@@ -24,8 +24,8 @@ interface CreateNewOrderAttributes {
 }
 
 interface OrderCreateRespAttribute {
-  orderNumber: number;
-  transactionId: number;
+  orderNumber: string;
+  transactionId: string;
   createdAt: Date;
   status: string;
 }

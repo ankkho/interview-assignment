@@ -18,11 +18,11 @@ const config = {
     dialect: 'postgres'
   },
   production: {
-    username: `${DB_USERNAME}`,
-    password: `${DB_PASSWORD}`,
-    database: `${DB_NAME}`,
+    username: `${DB_USERNAME}` || '',
+    password: `${DB_PASSWORD}` || '',
+    database: `${DB_NAME}` || '',
     use_env_variable: 'DATABASE_URL',
-    host: `${DB_HOST}`,
+    host: `${DB_HOST}` || '',
     dialect: 'postgres',
     dialectOptions: {
       ssl: {

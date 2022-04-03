@@ -1,3 +1,6 @@
+import dotenv from "dotenv"
+
+dotenv.config()
 import axios from 'axios';
 import models from '../models';
 import { dayMapper } from '../src/utils';
@@ -68,6 +71,7 @@ const seedRestaurantData = async () => {
           const openTime = getTwentyFourHourTime(replaceAt(time[0]));
           const closeTime = getTwentyFourHourTime(replaceAt(time[1]));
 
+          await new Promise(resolve => setTimeout(resolve, 2000))
           await openingHour.create({
             day: allDays,
             from: new Date(`01-3-2022 ${openTime} UTC`).getTime(),
