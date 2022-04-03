@@ -1,3 +1,6 @@
+scalar Date
+scalar DateTime
+
 enum days {
   MON
   TUE
@@ -33,7 +36,7 @@ type orderDetails {
   transactionId: String
   orderNumber: String
   status: String
-  createdAt: String
+  createdAt: Date
 }
 
 type getRestaurants {
@@ -59,10 +62,10 @@ type menuDetails {
 
 type Query {
   pingQuery: String
-  searchRestaurantQuery(query: String): [restaurantDetails]
-  searchMenuQuery(query: String): [menuDetails]
-  getRestaurantsQuery(time: String): [getRestaurants]
-  searchMenuByPriceRangeQuery(maxPrice: Float, minPrice: Float): [menuDetails]
+  searchRestaurantQuery(query: String!, limit: Int!, offset: Int!): [restaurantDetails]
+  searchMenuQuery(query: String!): [menuDetails]
+  getRestaurantsQuery(dateTime: DateTime!): [getRestaurants]
+  searchMenuByPriceRangeQuery(maxPrice: Int!, minPrice: Int!): [menuDetails]
 }
 
 type Mutation {
