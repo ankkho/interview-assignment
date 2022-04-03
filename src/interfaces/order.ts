@@ -30,7 +30,16 @@ interface OrderCreateRespAttribute {
   status: string;
 }
 
+interface NewOrderResponse {
+  valid: boolean;
+  code?: string;
+  message?: string;
+  errorCode?: string;
+  data?: OrderCreateRespAttribute
+}
+
 export {
+  NewOrderResponse,
   OrderAttributes,
   OrderCreateRespAttribute,
   CreateNewOrderAttributes,

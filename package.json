@@ -26,6 +26,7 @@
     "@types/express-pino-logger": "^4.0.3",
     "@types/ramda": "^0.28.2",
     "apollo-server": "^3.6.6",
+    "apollo-server-errors": "^3.3.1",
     "apollo-server-express": "^3.6.7",
     "axios": "^0.26.1",
     "dotenv": "^16.0.0",

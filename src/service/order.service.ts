@@ -1,12 +1,21 @@
 import { gt, isNil, subtract, add, isEmpty, multiply } from 'ramda';
 import { createNewOrder } from '../repo/order.repo';
 import { logger } from '../utils';
-import { OrderAttributes } from '../interfaces/order';
+import { OrderAttributes, NewOrderResponse } from '../interfaces/order';
 import { findUserById } from '../repo/user.repo';
 import { findRestaurantById } from '../repo/restaurant.repo';
 import { findMenuById } from '../repo/menu.repo';
+import { errorName } from '../errors';
 
-const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
+const {
+  INSUFFICIENT_BALANCE,
+  USER_NOT_FOUND,
+  RESTAURANT_NOT_FOUND,
+  ITEM_NOT_FOUND,
+  INTERNAL_SERVER_ERROR
+} = errorName
+
+const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<NewOrderResponse> => {
   try {
     const { userId, itemDetails, restaurantId } = orderAttrs;
     const userDetails = await findUserById(userId);
@@ -19,11 +28,11 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
         },
         'User does not exists'
       );
-
+      
       return {
         valid: false,
-        message: 'Sorry, no such user exists!'
-      };
+        errorCode: USER_NOT_FOUND
+      }
     }
 
     if (isNil(restaurantDetails)) {
@@ -36,8 +45,8 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
 
       return {
         valid: false,
-        message: 'Sorry, no such restaurant exists!'
-      };
+        errorCode: RESTAURANT_NOT_FOUND
+      }
     }
 
     const menuDetails = await Promise.all(
@@ -58,9 +67,8 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
 
       return {
         valid: false,
-        message:
-          'Please provide valid menu item ids which belongs to this restaurant!'
-      };
+        errorCode: ITEM_NOT_FOUND
+      }
     }
 
     const menuDetailsWithQty = menuDetails.flat().map((details) => {
@@ -85,11 +93,11 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
         { orderAttrs, totalAmount, userCashBalance },
         'Insufficient Balance'
       );
+      
       return {
         valid: false,
-        data: [],
-        message: 'Sorry, insufficient balance!'
-      };
+        errorCode: INSUFFICIENT_BALANCE
+      }
     }
 
     const newUserCashBalance = subtract(userCashBalance, totalAmount);
@@ -108,6 +116,7 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
 
     if (!isNil(response)) {
       return {
+        valid: true,
         data: response,
         message: 'Order created successfully!'
       };
@@ -115,11 +124,14 @@ const placeNewOrder = async (orderAttrs: OrderAttributes): Promise<unknown> => {
 
     return {
       valid: false,
-      message: 'Sorry, something went wrong. Order was not placed!'
-    };
+      code: INTERNAL_SERVER_ERROR
+    }
   } catch (error) {
     logger.error(error, 'Error');
-    // throw new Error(error)
+    return {
+      valid: false,
+      code: INTERNAL_SERVER_ERROR
+    }
   }
 };
 
