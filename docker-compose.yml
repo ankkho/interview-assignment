@@ -6,11 +6,16 @@ services:
     hostname: postgres
     ports:
       - "5432:5432"
-    environment:
-      POSTGRES_PASSWORD: password
-      POSTGRES_USER: user
-      POSTGRES_DB: db
-
+  server:
+    container_name: server
+    depends_on:
+      - db
+    command: npm i ts-node && npm run build
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    ports:
+      - "4000:4000"
 networks:
   internal:
     driver: bridge

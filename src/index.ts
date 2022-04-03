@@ -1,13 +1,13 @@
 import * as path from 'path';
 import * as fs from 'fs';
-import { GraphQLDate, GraphQLDateTime } from 'graphql-iso-date';
+import { DateTimeResolver, DateResolver } from "graphql-scalars"
 import { makeExecutableSchema } from '@graphql-tools/schema';
 import resolvers from './resolvers';
 
 const allResolvers = {
   ...resolvers,
-  Date: GraphQLDate,
-  DateTime: GraphQLDateTime
+  Date: DateResolver,
+  DateTime: DateTimeResolver
 };
 
 const schemaPublic: string = fs
