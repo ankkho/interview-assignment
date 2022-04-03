@@ -11,10 +11,11 @@ const { Op } = Sequelize;
 const searchMenuByPrice = async (
   getDishes: getMenuByPriceAttributes
 ): Promise<object> => {
-  const { minPrice, maxPrice, limit } = getDishes;
+  const { minPrice, maxPrice, limit, offset } = getDishes;
 
   const resp = await menu.findAll({
     limit,
+    offset,
     include: [
       {
         model: restaurant,
@@ -34,12 +35,15 @@ const searchMenuByPrice = async (
   return resp.map((v: get) => v.get({ plain: true }));
 };
 
-const search = (searchAttributes: searchAttributes): Promise<object> => {
+const search = (searchAttributes: searchAttributes): Array<object> => {
   const { query, limit } = searchAttributes;
 
   return menu.findAll({
     limit,
     order: [['dishName', 'ASC']],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     where: {
       dishName: { [Op.iLike]: `${query}%` }
     },
@@ -47,4 +51,16 @@ const search = (searchAttributes: searchAttributes): Promise<object> => {
   });
 };
 
-export { searchMenuByPrice, search };
+const findMenuById = (id: number, restaurantId: number) =>
+  menu.findAll({
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
+    where: {
+      id,
+      restaurantId
+    },
+    raw: true
+  });
+
+export { searchMenuByPrice, search, findMenuById };

@@ -16,6 +16,9 @@ const searchRestaurant = (
   return restaurant.findAll({
     limit,
     order: [['name', 'ASC']],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     where: {
       name: { [Op.iLike]: `${query}%` }
     },
@@ -31,6 +34,9 @@ const getByTime = (
   return restaurant.findAll({
     limit,
     order: [['name', 'ASC']],
+    attributes: {
+      exclude: ['createdAt', 'updatedAt']
+    },
     where: {
       price: {
         [Op.gte]: startTime,
@@ -41,4 +47,9 @@ const getByTime = (
   });
 };
 
-export { searchRestaurant, getByTime };
+const findRestaurantById = (id: number) =>
+  restaurant.findByPk(id, {
+    raw: true
+  });
+
+export { searchRestaurant, getByTime, findRestaurantById };
