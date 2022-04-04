@@ -1,5 +1,5 @@
 import { getRestaurantsBasedOnTime } from '../repo/openingHours.repo';
-import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours';
+import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours.interface';
 import { dayMapper, logger } from '../utils';
 
 const getRestaurantsByTime = async (

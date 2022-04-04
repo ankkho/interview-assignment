@@ -1,7 +1,7 @@
 import { gt, isNil, subtract, add, isEmpty, multiply } from 'ramda';
 import { createNewOrder } from '../repo/order.repo';
 import { logger } from '../utils';
-import { OrderAttributes, NewOrderResponse } from '../interfaces/order';
+import { OrderAttributes, NewOrderResponse, ItemDetailsWithQty } from '../interfaces/order.interface';
 import { findUserById } from '../repo/user.repo';
 import { findRestaurantById } from '../repo/restaurant.repo';
 import { findMenuById } from '../repo/menu.repo';
@@ -103,16 +103,15 @@ const placeNewOrder = async (
     }
 
     const newUserCashBalance = subtract(userCashBalance, totalAmount);
-    const newRestaurantAmount = add(restaurantCashBalance, totalAmount);
+    const newRestaurantCashBalance = add(restaurantCashBalance, totalAmount);
 
     const response = await createNewOrder({
       userId,
       restaurantId,
       totalAmount,
-      //@ts-ignore
       items: menuDetailsWithQty,
       userCashBalance: newUserCashBalance,
-      restaurantCashBalance: newRestaurantAmount
+      restaurantCashBalance: newRestaurantCashBalance
     });
 
     if (!isNil(response)) {

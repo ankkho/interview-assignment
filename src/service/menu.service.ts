@@ -1,5 +1,5 @@
 import { searchMenuByPrice, search } from '../repo/menu.repo';
-import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu';
+import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu.interface';
 
 const searchMenuByPriceRange = (getDishes: GetMenuByPriceAttributes) =>
   searchMenuByPrice({ ...getDishes });

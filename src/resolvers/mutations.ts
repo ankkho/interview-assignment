@@ -1,5 +1,5 @@
 import { placeNewOrder } from '../service/order.service';
-import { OrderAttributes } from '../interfaces/order';
+import { OrderAttributes } from '../interfaces/order.interface';
 import { ApolloError } from 'apollo-server';
 import { errorType, getErrorMessage } from '../errors';
 

@@ -2,7 +2,7 @@ import {
   IErrorName,
   IErrorType,
   IGetErrorMessageResp
-} from './interfaces/errors';
+} from './interfaces/errors.interface';
 
 const errorName: IErrorName = {
   USER_NOT_FOUND: 'USER_NOT_FOUND',

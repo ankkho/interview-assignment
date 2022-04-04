@@ -2,8 +2,8 @@ import { getRestaurantsByTime } from '../service/openingHours.service';
 import { searchMenuByPriceRange, searchMenu } from '../service/menu.service';
 import { getRestaurantByName } from '../service/restaurant.service';
 
-import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours';
-import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu';
+import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours.interface';
+import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu.interface';
 
 const getRestaurantsQuery = async (
   parent: {},

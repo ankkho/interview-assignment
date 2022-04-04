@@ -4,7 +4,7 @@ import {
   SearchAttributes,
   get,
   MenuDetails
-} from '../interfaces/menu';
+} from '../interfaces/menu.interface';
 
 const { menu, Sequelize, restaurant } = models;
 const { Op } = Sequelize;

@@ -2,7 +2,7 @@ import models from '../../models';
 import {
   GetByTimeAttributes,
   SearchAttributes
-} from '../interfaces/restaurant';
+} from '../interfaces/restaurant.interface';
 
 const { Sequelize, restaurant } = models;
 

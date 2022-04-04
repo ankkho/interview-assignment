@@ -1,5 +1,5 @@
 import models from '../../models';
-import { UserDetails } from '../interfaces/user';
+import { UserDetails } from '../interfaces/user.interface';
 
 const { user } = models;
 

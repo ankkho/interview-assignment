@@ -4,7 +4,7 @@ import models from '../../models';
 import {
   CreateNewOrderAttributes,
   OrderCreateRespAttribute
-} from '../interfaces/order';
+} from '../interfaces/order.interface';
 import { logger } from '../utils';
 import { findRestaurantById } from './restaurant.repo';
 

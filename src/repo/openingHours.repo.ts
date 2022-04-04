@@ -1,6 +1,6 @@
 import models from '../../models';
-import { OpeningHourAttributes } from '../interfaces/openingHours';
-import { get } from '../interfaces/menu';
+import { OpeningHourAttributes } from '../interfaces/openingHours.interface';
+import { get } from '../interfaces/menu.interface';
 
 const { Sequelize, restaurant, openingHour } = models;
 const { Op } = Sequelize;

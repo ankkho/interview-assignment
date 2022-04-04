@@ -8,19 +8,19 @@ interface ItemDetailsWithQty extends ItemDetails {
   restaurantId: number;
   price: number;
 }
-
 interface OrderAttributes {
   userId: number;
   restaurantId: number;
-  itemDetails: [ItemDetails];
+  itemDetails: ItemDetails[];
 }
 
 interface CreateNewOrderAttributes {
   userCashBalance: number;
   restaurantCashBalance: number;
   userId: number;
+  totalAmount: number;
   restaurantId: number;
-  items: [ItemDetailsWithQty];
+  items: ItemDetailsWithQty[];
 }
 
 interface OrderCreateRespAttribute {
