@@ -3,7 +3,10 @@ import { searchMenuByPriceRange, searchMenu } from '../service/menu.service';
 import { getRestaurantByName } from '../service/restaurant.service';
 
 import { GetRestaurantsByTimeAttr } from '../interfaces/openingHours.interface';
-import { GetMenuByPriceAttributes, SearchAttributes } from '../interfaces/menu.interface';
+import {
+  GetMenuByPriceAttributes,
+  SearchAttributes
+} from '../interfaces/menu.interface';
 
 const getRestaurantsQuery = async (
   parent: {},
