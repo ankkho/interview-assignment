@@ -13,7 +13,7 @@ const { PORT, NODE_ENV, APP_URL } = process.env;
 const server = new ApolloServer({
   schema: schemaPublic,
   introspection: true,
-  formatError: (err) => {    
+  formatError: (err) => {
     const { extensions } = err;
     const { code } = extensions;
     const { message, statusCode } = getErrorMessage(code);
