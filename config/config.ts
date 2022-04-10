@@ -1,13 +1,18 @@
+import dotenv from 'dotenv';
+
+dotenv.config()
+
 import fs from 'fs';
 import { logger } from '../src/utils';
 const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
+const configFilePath = `${__dirname}/config.json`
 
 const config = {
   development: {
-    username: 'user',
-    password: 'password',
-    database: 'db',
-    host: '127.0.0.1',
+    username: `${DB_USERNAME}` || '',
+    password: `${DB_PASSWORD}` || '',
+    database: `${DB_NAME}` || '',
+    host: `${DB_HOST}` || '',
     dialect: 'postgres'
   },
   test: {
@@ -21,7 +26,6 @@ const config = {
     username: `${DB_USERNAME}` || '',
     password: `${DB_PASSWORD}` || '',
     database: `${DB_NAME}` || '',
-    use_env_variable: 'DATABASE_URL',
     host: `${DB_HOST}` || '',
     dialect: 'postgres',
     dialectOptions: {
@@ -33,15 +37,32 @@ const config = {
   }
 };
 
-fs.appendFile(
-  `${__dirname}/config.json`,
-  `${JSON.stringify(config)}`,
-  'utf8',
-  (err) => {
-    if (err) {
-      logger.error(err);
+const createNewFile =  () => {
+  fs.appendFile(
+    configFilePath,
+    `${JSON.stringify(config)}`,
+    'utf8',
+    (error) => {
+      if (error) {
+        logger.error(error);
+      }
+      logger.info('config.json file has been created')
     }
+  );
+}
+
+fs.stat(configFilePath, (_, status) => {
+  if (status) {
+    fs.unlink(configFilePath, (err) => {
+      if (err) {
+        logger.error('config.json file was not deleted');
+      }
+      logger.info('config.json file was deleted')
+    })
   }
-);
+  createNewFile()
+})
+
+
 
 export default config;
