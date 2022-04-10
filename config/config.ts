@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
 
-dotenv.config()
+dotenv.config();
 
 import fs from 'fs';
 import { logger } from '../src/utils';
 const { DB_HOST, DB_USERNAME, DB_PASSWORD, DB_NAME } = process.env;
-const configFilePath = `${__dirname}/config.json`
+const configFilePath = `${__dirname}/config.json`;
 
 const config = {
   development: {
@@ -37,7 +37,7 @@ const config = {
   }
 };
 
-const createNewFile =  () => {
+const createNewFile = () => {
   fs.appendFile(
     configFilePath,
     `${JSON.stringify(config)}`,
@@ -46,10 +46,10 @@ const createNewFile =  () => {
       if (error) {
         logger.error(error);
       }
-      logger.info('config.json file has been created')
+      logger.info('config.json file has been created');
     }
   );
-}
+};
 
 fs.stat(configFilePath, (_, status) => {
   if (status) {
@@ -57,12 +57,10 @@ fs.stat(configFilePath, (_, status) => {
       if (err) {
         logger.error('config.json file was not deleted');
       }
-      logger.info('config.json file was deleted')
-    })
+      logger.info('config.json file was deleted');
+    });
   }
-  createNewFile()
-})
-
-
+  createNewFile();
+});
 
 export default config;
